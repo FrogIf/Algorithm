@@ -11,26 +11,26 @@ public class MergeSort {
     }
 
     public static void mergeSort(int[] arr, int start, int end){
-        int mid = start + (end - start) / 2;
+        /*
+         * 时间复杂度:
+         *     T(n) = θ(nlgn)
+         */
+        if(start < end){
+            int mid = start + (end - start) / 2;
 
-        if(start < mid) mergeSort(arr, start, mid);
-        if(mid + 1 < end) mergeSort(arr, mid + 1, end);
+            mergeSort(arr, start, mid);
+            mergeSort(arr, mid + 1, end);
 
-        mergeC(arr, start, mid, end);
+            mergeC(arr, start, mid, end);
+        }
     }
 
     /*
      * 巧妙的普通二路归并
      */
     private static void mergeC(int[] arr, int start, int mid, int end){
-        int[] arrA = new int[mid - start + 1];
-        int[] arrB = new int[end - mid];
-        for(int i = 0; i < arrA.length; i++){
-            arrA[i] = arr[start + i];
-        }
-        for(int i = 0; i < arrB.length; i++){
-            arrB[i] = arr[mid + i + 1];
-        }
+        int[] arrA = copy(arr, start, mid);
+        int[] arrB = copy(arr, mid + 1, end);
 
         for(int i = start, m = 0, n = 0; i <= end; i++){
             if(n >= arrB.length || (m < arrA.length && arrA[m] < arrB[n])){
@@ -45,14 +45,8 @@ public class MergeSort {
      * 普通二路归并
      */
     private static void mergeB(int[] arr, int start, int mid, int end){
-        int[] arrA = new int[mid - start + 1];
-        int[] arrB = new int[end - mid];
-        for(int i = 0; i < arrA.length; i++){
-            arrA[i] = arr[start + i];
-        }
-        for(int i = 0; i < arrB.length; i++){
-            arrB[i] = arr[mid + i + 1];
-        }
+        int[] arrA = copy(arr, start, mid);
+        int[] arrB = copy(arr, mid + 1, end);
 
         int m = 0;
         int n = 0;
@@ -106,4 +100,11 @@ public class MergeSort {
         }
     }
 
+    private static int[] copy(int[] arr, int start, int end){
+        int[] result = new int[end - start + 1];
+        for(int i = 0; i < result.length; i++){
+            result[i] = arr[start + i];
+        }
+        return result;
+    }
 }

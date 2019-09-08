@@ -5,19 +5,30 @@ import java.util.Arrays;
 public class InsertionSort {
 
     public static void main(String[] args){
-        int[] arr = new int[]{34, 22, 3, 56, 12, -1, 493, 2, 5, 904, 2};
+        int[] arr = new int[]{2, 5, 23, 45, 2, 65, 2, 43, 9, 8, 23, 4, 5, 8, 9};
         insertionSort(arr);
         System.out.println(Arrays.toString(arr));
     }
 
-    public static void insertionSort(int[] arr){
+    private static void insertionSort(int[] arr){
+        /*
+         * 时间复杂度:
+         *      T(n) = O(n^2)
+         *      T(n) = Ω(n)    ; 当已经有序的时候
+         * 循环不变式:
+         *      外层循环每次循环开始前, 0 - i-1 都是已经排好序的了
+         * 特点:
+         *      in place sort
+         */
         for(int i = 1; i < arr.length; i++){
-            int key = arr[i];
+            int val = arr[i];
             int j = i - 1;
-            for(; j >= 0 && arr[j] < key; j--){
+            for(; j >= 0 && arr[j] > val; j--){
                 arr[j + 1] = arr[j];
             }
-            arr[j + 1] = key;
+            arr[j + 1] = val;
         }
     }
+
+
 }

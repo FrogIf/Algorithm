@@ -1,4 +1,4 @@
-package sch.frog.algorithm;
+package sch.frog.algorithm.extend;
 
 import java.util.Arrays;
 
