@@ -2,6 +2,9 @@ package sch.frog.algorithm;
 
 import java.util.Arrays;
 
+/**
+ * 插入排序
+ */
 public class InsertionSort {
 
     public static void main(String[] args){

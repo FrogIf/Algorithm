@@ -2,6 +2,12 @@ package sch.frog.algorithm;
 
 import java.util.Arrays;
 
+/**
+ * 归并排序:
+ *      归并排序是一种分治策略
+ *      主要核心部分是二路归并.
+ *      下面使用了三种不同方式的二路归并
+ */
 public class MergeSort {
 
     public static void main(String[] args){

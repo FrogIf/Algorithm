@@ -1,5 +1,10 @@
 package sch.frog.algorithm;
 
+/**
+ * 两种矩阵乘法算法:
+ *   1. 普通矩阵乘法
+ *   2. Strassen算法
+ */
 public class MatrixStrassen {
 
     public static void main(String[] args){
