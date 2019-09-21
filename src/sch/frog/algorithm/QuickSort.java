@@ -11,8 +11,36 @@ public class QuickSort {
 
     public static void main(String[] args){
         int[] arr = new int[]{23, 34, 1, 56, 23, 6, 23, 356, 8, 23, 23, 5, 9, 2, 4};
-        quickSort(arr, 0, arr.length - 1);
+        quickSortBest(arr, 0, arr.length - 1);
+//        quickSort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
+    }
+
+    public static void quickSortBest(int[] arr, int start, int end){
+        if(start < end){
+            int pivot = arr[start];
+            int tempStart = start;
+            int tempEnd = end;
+            while(start < end){
+                while(start < end && arr[end] > pivot){
+                    end--;
+                }
+                if(start < end){
+                    arr[start] = arr[end];
+                    start++;
+                }
+                while(start < end && arr[start] < pivot){
+                    start++;
+                }
+                if(start < end){
+                    arr[end] = arr[start];
+                    end--;
+                }
+            }
+            arr[start] = pivot;
+            quickSort(arr, tempStart, start - 1);
+            quickSort(arr, start + 1, tempEnd);
+        }
     }
 
     public static void quickSort(int[] arr, int start, int end/*包含end*/){
