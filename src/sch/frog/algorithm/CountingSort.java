@@ -2,6 +2,9 @@ package sch.frog.algorithm;
 
 import java.util.Arrays;
 
+/**
+ * 基数排序
+ */
 public class CountingSort {
 
     public static void main(String[] args){
