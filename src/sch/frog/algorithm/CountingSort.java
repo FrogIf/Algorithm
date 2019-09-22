@@ -15,12 +15,25 @@ public class CountingSort {
 
 
     private static int[] countingSort(int[] arr){
+        // 同时找出最大值和最小值
+        boolean isOdd = arr.length % 2 == 1;
         int max = arr[0];
-        int min = max;
-        for(int i = 1; i < arr.length; i++){
-            int t = arr[i];
-            if(t > max){ max = t; }
-            if(t < min){ min = t;}
+        int min = isOdd ? max : arr[1];
+        if(min < max){
+            int t = max;
+            max = min;
+            min = t;
+        }
+        for(int i = isOdd ? 2 : 3; i < arr.length; i += 2){
+            int tMax = arr[i];
+            int tMin = arr[i - 1];
+            if(tMax < tMin){
+                int t = tMax;
+                tMax = tMin;
+                tMin = t;
+            }
+            if(tMax > max){ max = tMax; }
+            if(tMin < min){ min = tMin;}
         }
 
         int[] cArr = new int[max - min + 1];
