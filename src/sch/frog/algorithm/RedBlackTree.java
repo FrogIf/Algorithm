@@ -24,7 +24,6 @@ public class RedBlackTree<E extends Comparable<E>> {
 
     private RedBlackTree<E> right;
 
-
     /**
      * 左旋
      */
@@ -164,6 +163,16 @@ public class RedBlackTree<E extends Comparable<E>> {
         }
         tree.color = BLACK;
         return tree;
+    }
+
+    /**
+     * 删除数据, 返回一棵新树
+     * @param key
+     * @return
+     */
+    public BinaryTree<E> delete(E key){
+        
+        return null;
     }
 
     public E search(E key){

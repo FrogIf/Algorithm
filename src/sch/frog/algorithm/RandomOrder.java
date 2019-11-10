@@ -20,7 +20,7 @@ public class RandomOrder {
     public static void random(int[] arr){
         Random r = new Random();
         for(int i = 0; i < arr.length - 1; i++){
-            int j = r.nextInt(arr.length - i - 1) + 1 + i;
+            int j = r.nextInt(arr.length - i) + i;
             int temp = arr[i];
             arr[i] = arr[j];
             arr[j] = temp;
