@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class HuffmanCompress {
 
     public static void main(String[] arr) throws IOException {
-        compress("F:\\test.txt", "F:\\output.frogc");
+        compress("F:\\test.xlsx", "F:\\output.frogc");
         decompress("F:\\output.frogc", "F:\\yyyy.frogdc");
     }
 
