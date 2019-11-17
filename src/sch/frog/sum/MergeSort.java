@@ -1,15 +1,17 @@
-package sch.frog.algorrthmnew;
+package sch.frog.sum;
 
 import java.util.Arrays;
 
+/**
+ * 归并排序
+ */
 public class MergeSort {
 
     public static void main(String[] args){
-        int[] arr = new int[]{12, 3, 12, 65, 12, 765, 23, 56, 67, 2, 3645, 45, 4, 24, 78, 896, 4, 4, 37, 9, 54};
+        int[] arr = new int[]{2, 53, 12, 23, 56, 1, 3, 7, 23, 35, 132};
         mergeSort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
     }
-
 
     private static void mergeSort(int[] arr, int start, int end){
         if(start < end){
@@ -21,28 +23,24 @@ public class MergeSort {
     }
 
     private static void merge(int[] arr, int start, int mid, int end){
-        int[] left = new int[mid - start + 1];
-        int[] right = new int[end - mid];
-
-        for(int i = 0; i < left.length; i++){
-            left[i] = arr[start + i];
+        int[] lArr = new int[mid - start + 1];
+        int[] rArr = new int[end - mid];
+        for(int i = 0; i < lArr.length; i++){
+            lArr[i] = arr[start + i];
         }
-
-        for(int j = 0; j < right.length; j++){
-            right[j] = arr[mid + j + 1];
+        for (int i = 0; i < rArr.length; i++){
+            rArr[i] = arr[mid + i + 1];
         }
 
         int i = 0;
         int j = 0;
         int k = start;
         while(k <= end){
-            if(j == right.length || (i != left.length && left[i] < right[j])){
-                arr[k++] = left[i++];
+            if(j == rArr.length || (i < lArr.length && lArr[i] < rArr[j])){
+                arr[k++] = lArr[i++];
             }else{
-                arr[k++] = right[j++];
+                arr[k++] = rArr[j++];
             }
         }
-
     }
-
 }

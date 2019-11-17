@@ -1,19 +1,22 @@
-package sch.frog.algorrthmnew;
+package sch.frog.sum;
 
 import java.util.Arrays;
 
+/**
+ * 快速排序
+ */
 public class QuickSort {
 
     public static void main(String[] args){
-        int[] arr = new int[]{12, 3, 12, 65, 12, 765, 23, 56, 67, 2, 3645, 45, 4, 24, 78, 896, 4, 4, 37, 9, 54};
+        int[] arr = new int[]{12, 3, 56, 2, 435, 56, 23, 424, 556, 23, 4};
         quickSort(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
     }
 
     private static void quickSort(int[] arr, int start, int end){
         if(start < end){
-            int tempStart = start;
-            int tempEnd = end;
+            int tS = start;
+            int tE = end;
             int pivot = arr[start];
             while(start < end){
                 while(start < end && arr[end] > pivot){
@@ -30,10 +33,8 @@ public class QuickSort {
                 }
             }
             arr[start] = pivot;
-
-            quickSort(arr, tempStart, start - 1);
-            quickSort(arr, start + 1, tempEnd);
+            quickSort(arr, tS, start - 1);
+            quickSort(arr, start + 1, tE);
         }
     }
-
 }
