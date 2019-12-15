@@ -4,10 +4,11 @@ import java.util.Arrays;
 
 /**
  * 堆排序
- * 可以拆分为3个子动作:
+ * 可以拆分为2个子动作:
  * 1. 局部堆化(maxHeapify) : T(n) = O(lgn)
  * 2. 构建最大堆(buildMaxHeap) : T(n) = O(n)
- * 3. 堆排序(heapSort) : T(n) = O(nlgn)
+ * 合成-->
+ *      堆排序(heapSort) : T(n) = O(nlgn)
  */
 public class HeapSort {
 
