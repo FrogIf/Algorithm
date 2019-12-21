@@ -6,12 +6,21 @@ public class BTreeTest {
 
     public static void main(String[] args){
         BTree<Integer> tree = new BTree<>();
-        for(int i = 0; i < 20; i++){
-            System.out.println(tree.insert(i));
+        int end = 20;
+        for(int i = 0; i <= end; i++){
+            System.out.println(i + "-" + tree.insert(i));
         }
 
-        for (int i = 0; i < 20; i++){
-            System.out.println(tree.search(i));
+        for (int i = 0; i <= end; i++){
+            System.out.println(i + "-" + tree.search(i));
+        }
+
+        for(int i = 0; i <= end; i++){
+            System.out.println(i + "-" + tree.delete(i));
+        }
+
+        for(int i = 0; i <= end; i++){
+            System.out.println(i + "-" + tree.delete(i));
         }
     }
 }
