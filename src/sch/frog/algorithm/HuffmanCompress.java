@@ -161,7 +161,6 @@ public class HuffmanCompress {
             }
         }
 
-        // TODO 尾部增加终结标志 ---> 填补1
         if(res < 8){
             cache[cacheIndex++] = (byte) ((255 >> 8 - res) | temp);
         }
