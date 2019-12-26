@@ -34,7 +34,7 @@ public class FibonacciHeapTest {
 //        System.out.println("=======================");
 
         while (!heap.isEmpty()){
-            System.out.println("---" + heap.extractMin().getData() + "---");
+            System.out.println("---" + heap.extractMin() + "---");
             System.out.println("=======================");
             System.out.println(heap.show());
             System.out.println("=======================");
