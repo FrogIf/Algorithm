@@ -97,6 +97,78 @@ public class FibonacciHeap<T extends Comparable<T>> {
     }
 
     /**
+     * 降低指定节点的值
+     * @param node 目标节点
+     * @param data 目标值(该值必须小于等于原值)
+     */
+    public void decrease(Node<T> node, T data){
+        if(this.min == null){
+            throw new IllegalStateException("heap is empty.");
+        }
+        int mark = node.data.compareTo(data);
+        if(mark == 0){
+            return;
+        }else if(mark < 0){
+            throw new IllegalArgumentException("data is large than old data.");
+        }
+
+        node.data = data;
+        Node<T> p = node.parent;
+        if(p != null && p.data.compareTo(data) > 0){
+            cut(p, node);
+            cascadingCut(p);
+        }
+
+        if(this.min.data.compareTo(data) > 0){
+            this.min = node;
+        }
+    }
+
+    /**
+     * 将p节点下的指定节点c剪切至根环
+     * @param p 父节点
+     * @param c 子节点
+     */
+    private void cut(Node<T> p, Node<T> c){
+        c.parent = null;
+        if(p.child == c){
+            p.child = c.left;
+        }
+
+        if(c.left == c){
+            p.child = null;
+        }else{
+            Node<T> tl = c.left;
+            tl.right = c.right;
+            c.right.left = tl;
+        }
+
+        Node<T> tl = this.min.left;
+        tl.right = c;
+        c.left = tl;
+        this.min.left = c;
+        c.right = this.min;
+
+        c.mark = false;
+    }
+
+    /**
+     * 级联剪切
+     * @param c 待剪切节点
+     */
+    private void cascadingCut(Node<T> c){
+        Node<T> p = c.parent;
+        if(p != null){
+            if(!c.mark){
+                c.mark = true;
+            }else{
+                cut(p, c);
+                cascadingCut(p);
+            }
+        }
+    }
+
+    /**
      * 从堆中取出最小元素
      * @return 最小值
      */
@@ -137,6 +209,7 @@ public class FibonacciHeap<T extends Comparable<T>> {
                 }
             }
             this.size--;
+            result.left = result.right = result.parent = result.child = null;
             return result.data;
         }
         return null;
@@ -191,7 +264,6 @@ public class FibonacciHeap<T extends Comparable<T>> {
                 }
             }
         }
-
     }
 
     /**
@@ -248,6 +320,12 @@ public class FibonacciHeap<T extends Comparable<T>> {
         private Node<T> parent;
         private Node<T> child;
         private int degree;
+
+        /**
+         * 标记
+         * 1. 当该节点下有子节点移除时, 将mark置为true
+         * 2. 当该节点变为根节点时, 将mark置为false
+         */
         private boolean mark;
 
         public T getData() {
