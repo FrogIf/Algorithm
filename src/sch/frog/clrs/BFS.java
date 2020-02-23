@@ -20,10 +20,12 @@ public class BFS {
             }
         }
 
-        breadthFirstSearch(source, graph);
+        breadthFirstSearch(source);
 
         for (GraphByAdjacencyList.Vertex<String> vertex : graph.vertices) {
-            System.out.println(sourceVertexName + " -> " + vertex.data + " : " + vertex.d);
+            System.out.print(sourceVertexName + " -> " + vertex.data + " : " + vertex.d + " : ");
+            printShortPath(source, vertex);
+            System.out.println();
         }
     }
 
@@ -31,24 +33,40 @@ public class BFS {
      * 广度优先搜索<br/>
      * 该方法会对顶点进行着色, 并且更新源节点到这个顶点的距离
      * @param s 源节点
-     * @param graph 要搜索的图
      */
-    private static void breadthFirstSearch(GraphByAdjacencyList.Vertex<String> s, GraphByAdjacencyList<String> graph){
+    private static void breadthFirstSearch(GraphByAdjacencyList.Vertex<String> s){
         s.color = GraphByAdjacencyList.Color.GRAY;
         s.d = 0;
         Queue<GraphByAdjacencyList.Vertex<String>> queue = new LinkedList<>();
         queue.add(s);
 
         while(!queue.isEmpty()){
-            GraphByAdjacencyList.Vertex<String> midSource = queue.poll();
-            for (GraphByAdjacencyList.Vertex<String> v : midSource.adjacencyList) {
+            GraphByAdjacencyList.Vertex<String> parent = queue.poll();
+            for (GraphByAdjacencyList.Vertex<String> v : parent.adjacencyList) {
                 if(v.color == GraphByAdjacencyList.Color.WHITE){
                     v.color = GraphByAdjacencyList.Color.GRAY;
-                    v.d = midSource.d + 1;
+                    v.d = parent.d + 1;
+                    v.p = parent;
                     queue.add(v);
                 }
             }
-            midSource.color = GraphByAdjacencyList.Color.BLACK;
+            parent.color = GraphByAdjacencyList.Color.BLACK;
+        }
+    }
+
+    /**
+     * 输出最短路径
+     */
+    private static void printShortPath(GraphByAdjacencyList.Vertex<String> s, GraphByAdjacencyList.Vertex<String> v){
+        if(v == s){
+            System.out.print(s.data);
+        }else{
+            if(v.p == null){
+                System.out.print(s.data + " -> " + v.data + "不可达");
+            }else{
+                printShortPath(s, v.p);
+                System.out.print(" - " + v.data);
+            }
         }
     }
 
@@ -81,7 +99,7 @@ public class BFS {
         // 构建edge
         v1.adjacencyList.add(v2);
         v1.adjacencyList.add(v4);
-        v1.adjacencyList.add(v6);
+//        v1.adjacencyList.add(v6);
 
         v2.adjacencyList.add(v1);
         v2.adjacencyList.add(v3);
@@ -122,6 +140,7 @@ class GraphByAdjacencyList<T> {
         for (Vertex<T> vertex : vertices) {
             vertex.color = Color.WHITE;
             vertex.d = 0;
+            vertex.p = null;
         }
     }
 
@@ -149,6 +168,11 @@ class GraphByAdjacencyList<T> {
          * 源节点到该节点的距离, 广度优先搜索会用到
          */
         int d;
+
+        /**
+         * 通过广度优先搜索, 获取到的该节点的前驱节点
+         */
+        Vertex<T> p;
     }
 
 }
