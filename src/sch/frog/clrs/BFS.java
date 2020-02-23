@@ -1,6 +1,5 @@
 package sch.frog.clrs;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -12,7 +11,7 @@ public class BFS {
 
     public static void main(String[] args){
         GraphByAdjacencyList<String> graph = init();
-        String sourceVertexName = "F";
+        String sourceVertexName = "A";
         GraphByAdjacencyList.Vertex<String> source = new GraphByAdjacencyList.Vertex<>();
         for (GraphByAdjacencyList.Vertex<String> vertex : graph.vertices) {
             if(sourceVertexName.equals(vertex.data)){
@@ -21,45 +20,36 @@ public class BFS {
             }
         }
 
-        List<PathInfo<String>> list = breadthFirstSearch(source, graph);
-        for (PathInfo<String> stringPathInfo : list) {
-            System.out.println(stringPathInfo);
-        }
+        breadthFirstSearch(source, graph);
 
+        for (GraphByAdjacencyList.Vertex<String> vertex : graph.vertices) {
+            System.out.println(sourceVertexName + " -> " + vertex.data + " : " + vertex.d);
+        }
     }
 
     /**
-     * 广度优先搜索, 最终返回值构建一个列表, 列出从s到达图上任意可达节点的最短路径
+     * 广度优先搜索<br/>
+     * 该方法会对顶点进行着色, 并且更新源节点到这个顶点的距离
      * @param s 源节点
      * @param graph 要搜索的图
-     * @return 最短路径列表
      */
-    private static List<PathInfo<String>> breadthFirstSearch(GraphByAdjacencyList.Vertex<String> s, GraphByAdjacencyList<String> graph){
-        List<PathInfo<String>> result = new ArrayList<>();
-        graph.reset();  //  重置颜色
-
-        PathInfo<String> start = new PathInfo<>(s);
+    private static void breadthFirstSearch(GraphByAdjacencyList.Vertex<String> s, GraphByAdjacencyList<String> graph){
         s.color = GraphByAdjacencyList.Color.GRAY;
-        start.d = 0;
-        Queue<PathInfo<String>> queue = new LinkedList<>();
-        queue.add(start);
+        s.d = 0;
+        Queue<GraphByAdjacencyList.Vertex<String>> queue = new LinkedList<>();
+        queue.add(s);
 
         while(!queue.isEmpty()){
-            PathInfo<String> pathInfo = queue.poll();
-            for (GraphByAdjacencyList.Vertex<String> v : pathInfo.vertex.adjacencyList) {
+            GraphByAdjacencyList.Vertex<String> midSource = queue.poll();
+            for (GraphByAdjacencyList.Vertex<String> v : midSource.adjacencyList) {
                 if(v.color == GraphByAdjacencyList.Color.WHITE){
                     v.color = GraphByAdjacencyList.Color.GRAY;
-                    PathInfo<String> p = new PathInfo<>(v);
-                    p.d = pathInfo.d + 1;
-                    queue.add(p);
-                    result.add(p);
+                    v.d = midSource.d + 1;
+                    queue.add(v);
                 }
             }
-            pathInfo.vertex.color = GraphByAdjacencyList.Color.BLACK;
+            midSource.color = GraphByAdjacencyList.Color.BLACK;
         }
-
-        graph.reset();  // 重置颜色
-        return result;
     }
 
     /**
@@ -117,20 +107,6 @@ public class BFS {
 
 }
 
-class PathInfo<T>{
-    GraphByAdjacencyList.Vertex<T> vertex = null;
-    int d;  // 从源节点到该节点所经过的路径个数
-
-    public PathInfo(GraphByAdjacencyList.Vertex<T> vertex) {
-        this.vertex = vertex;
-    }
-
-    @Override
-    public String toString() {
-        return this.vertex.data + " : " + d;
-    }
-}
-
 /**
  * 图邻接表表示
  */
@@ -140,11 +116,12 @@ class GraphByAdjacencyList<T> {
     List<Vertex<T>> vertices = new LinkedList<>();
 
     /**
-     * 重置节点颜色
+     * 重置节点颜色及距离
      */
     void reset(){
         for (Vertex<T> vertex : vertices) {
             vertex.color = Color.WHITE;
+            vertex.d = 0;
         }
     }
 
@@ -166,7 +143,12 @@ class GraphByAdjacencyList<T> {
         /**
          * 节点颜色, 广度优先搜索会用到
          */
-        Color color;
+        Color color = Color.WHITE;
+
+        /**
+         * 源节点到该节点的距离, 广度优先搜索会用到
+         */
+        int d;
     }
 
 }
